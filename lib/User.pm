@@ -35,7 +35,23 @@ async sub get_profile_p ( $self ) {
         )
     ) unless $self->_profile_p;
 
-    return await $self->_profile_p;
+    return  $self->_profile_p;
 }
 
 1;
+
+=pod
+
+=head1 Asynchronous User
+
+We use this as example on how to create asynchronous code in a modular manner.
+This represent an C<User> module that has an async operation: get its profile.
+
+The module creates a fake data that represents user profile and add some random
+delay to simulate some slow operation (a database fetch or an http request).
+The idea is to teach us how to design a module that makes this async operation,
+and how to use it. 
+
+
+=cut
+
