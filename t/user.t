@@ -10,11 +10,11 @@ async sub tests {
     my @users = map { User->new } 1 .. 10;
 
     my $got;
-
     foreach my $user (@users) {
+
         # try to get user profile
         try { $got = await $user->get_profile_p }
-        catch { 
+        catch {
             # check error message
             like $@, qr/Fake error/, "Right error message" or note explain $@;
             next;
