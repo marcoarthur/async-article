@@ -14,8 +14,8 @@ has _fake_profile => fake_hash(
 
 async sub get_profile_p ( $self ) {
 
-    # simulate a first time promise that delays 1~3 secs to resolve/fail
-    # and that fails 20% of times.
+    # simulate a service that delays 1~3 secs to resolve/fail
+    # and that fails 1/5 (20%) of times.
     $self->_profile_p(
         Mojo::Promise->new(
             sub ( $resolve, $reject ) {
@@ -25,14 +25,12 @@ async sub get_profile_p ( $self ) {
                 Mojo::IOLoop->timer(
                     $delay => sub {
 
-                        # will be fullfilled
-                        if ( int rand 4 ) {
+                        if ( int rand 4 ) {    # will be fullfilled
                             my $profile = $self->_fake_profile();
                             $profile->{delay} = $delay;
                             $resolve->($profile);
-                        } else {
+                        } else {               # will be rejected
 
-                            # will be rejected
                             $reject->('Fake error');
                         }
                     }
