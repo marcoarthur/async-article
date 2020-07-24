@@ -19,23 +19,29 @@ async sub get_profile_p ( $self ) {
     $self->_profile_p(
         Mojo::Promise->new(
             sub ( $resolve, $reject ) {
-                if ( int rand 4 ) {
-                    my $delay = int( rand(3) );    # time will take to resolve
-                    Mojo::IOLoop->timer(
-                        $delay => sub {
+
+                # time will take to resolve
+                my $delay = int( rand(3) );
+                Mojo::IOLoop->timer(
+                    $delay => sub {
+
+                        # will be fullfilled
+                        if ( int rand 4 ) {
                             my $profile = $self->_fake_profile();
                             $profile->{delay} = $delay;
                             $resolve->($profile);
+                        } else {
+
+                            # will be rejected
+                            $reject->('Fake error');
                         }
-                    );
-                } else {
-                    $reject->('Fake error');
-                }
+                    }
+                );
             }
         )
     ) unless $self->_profile_p;
 
-    return  $self->_profile_p;
+    return $self->_profile_p;
 }
 
 1;

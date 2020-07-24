@@ -15,7 +15,7 @@ async sub tests {
         # try to get user profile
         try { $got = await $user->get_profile_p }
         catch {
-            # check error message
+            # if error: check error message
             like $@, qr/Fake error/, "Right error message" or note explain $@;
             next;
         }
