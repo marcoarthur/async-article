@@ -9,7 +9,7 @@ use constant DEBUG => 0;
 # Make tests async
 async sub tests {
 
-    # create 5 users and solve each
+    # create users and solve each one
     {
         my @users = map { User->new } 1 .. 5;
 
