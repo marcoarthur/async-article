@@ -2,6 +2,7 @@ package User;
 use Mojo::Base -base, -async_await, -signatures;
 use Mojo::Promise;
 use Data::Fake qw/Core Names Text Dates/;
+use Mojo::Exception;
 
 has _profile_p    => sub { undef };
 has _fake_profile => fake_hash(
@@ -31,7 +32,7 @@ async sub get_profile_p ( $self ) {
                             $resolve->($profile);
                         } else {               # will be rejected
 
-                            $reject->('Fake error');
+                            $reject->(Mojo::Exception->new('Fake error'));
                         }
                     }
                 );
